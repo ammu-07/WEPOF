@@ -9,8 +9,8 @@ class CheckboxGroupProductPage():
     def checkbox_group_product_page(self, field_value_01, field_value_02):
         try:
 
-            self.driver.find_element_by_name(field_value_01).click()
-            self.driver.find_element_by_name(field_value_02).click()
+            self.driver.find_element_by_id("checkboxgroup_01_0").click()
+            self.driver.find_element_by_id("checkboxgroup_01_1").click()
             self.driver.find_element_by_name(self.add_to_cart_button_by_name).click()
 
         except ValueError:

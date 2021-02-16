@@ -154,7 +154,7 @@ class AddField_WEPO(unittest.TestCase):
     #         admin_orders_page.admin_orders_page(self.value_field_type_str, self.value_field_value_str)
     #         self.sheet1.write(i, 10, 'Field displayed successfully @WooCommerce >> Orders >> View Order page')
     #         self.workbook1.save('/Users/ammuprakash/Downloads/WEPO Fields.xlsx')
-
+    #
     # def test_03_create_checkbox_field(self):
     #     driver = self.driver
     #     self.workbook = xlrd.open_workbook('/Users/ammuprakash/Downloads/WEPO Fields.xlsx')
@@ -215,7 +215,7 @@ class AddField_WEPO(unittest.TestCase):
     #         self.sheet1.write(i, 9, 'Field displayed successfully @WooCommerce >> Orders >> View Order page')
     #         self.workbook1.save('/Users/ammuprakash/Downloads/WEPO Fields.xlsx')
     #
-    def test_04_create_checkbox_field(self):
+    def test_01_create_checkbox_group_field(self):
         driver = self.driver
         self.workbook = xlrd.open_workbook('/Users/ammuprakash/Downloads/WEPO Fields.xlsx')
         self.workbook1 = copy(self.workbook)
@@ -226,57 +226,59 @@ class AddField_WEPO(unittest.TestCase):
             self.value_field_type = self.sheet.cell_value(i, 0)
             self.value_field_name = self.sheet.cell_value(i, 1)
             self.value_field_title = self.sheet.cell_value(i, 2)
-            self.field_value = self.sheet.cell_value(i, 3)
+            self.value_field_value = self.sheet.cell_value(i, 3)
             self.field_value_01 = self.sheet.cell_value(i, 4)
             self.field_value_02 = self.sheet.cell_value(i, 5)
+            self.field_display_value = self.sheet.cell_value(i, 6)
 
             self.value_field_name_str = str(self.value_field_name)
             self.value_field_title_str = str(self.value_field_title)
             self.value_field_type_str = str(self.value_field_type)
             self.value_field_value_str = str(self.value_field_value)
-            self.field_value_01_str = str(field_value_01)
-            self.field_value_02_str = str(field_value_02)
+            self.field_value_01_str = str(self.field_value_01)
+            self.field_value_02_str = str(self.field_value_02)
+            self.field_display_value_str = str(self.field_display_value)
 
             # Creating a Field from WEPOF Settings #
             create_checkbox_group_field = AddCheckboxGroupField(driver)
-            create_checkbox_group_field.create_checkbox_group_field(self.value_field_type_str, self.value_field_name_str, self.value_field_title_str, self.value_field_value)
+            create_checkbox_group_field.create_checkbox_group_field(self.value_field_type_str, self.value_field_name_str, self.value_field_title_str, self.value_field_value_str)
             print(self.value_field_type, "Field created successfully")
-            self.sheet1.write(i, 4, 'Field created successfully')
+            self.sheet1.write(i, 7, 'Field created successfully')
             self.workbook1.save('/Users/ammuprakash/Downloads/WEPO Fields.xlsx')
             self.driver.get("http://test1.floopbox.com/index.php/product/test1/")
 
             # Previewing the created field at Product page#
             checkbox_group_product_page = CheckboxGroupProductPage(driver)
             checkbox_group_product_page.checkbox_group_product_page(self.field_value_01_str, self.field_value_02_str)
-            self.sheet1.write(i, 5, 'Field displayed successfully @Product page')
+            self.sheet1.write(i, 8, 'Field displayed successfully @Product page')
             self.workbook1.save('/Users/ammuprakash/Downloads/WEPO Fields.xlsx')
 
             # Previewing the created field at Cart page#
             self.driver.get("https://test1.floopbox.com/index.php/cart/")
             cart_page = CartPage(driver)
             cart_page.cart_page(self.value_field_type_str, self.value_field_value_str)
-            self.sheet1.write(i, 6, 'Field displayed successfully @Cart page')
+            self.sheet1.write(i, 9, 'Field displayed successfully @Cart page')
             self.workbook1.save('/Users/ammuprakash/Downloads/WEPO Fields.xlsx')
 
             # Previewing the created field at Checkout page#
             self.driver.get("https://test1.floopbox.com/index.php/checkout/")
             checkout_page = CheckoutPage(driver)
-            checkout_page.checkout_page(self.value_field_type_str, self.value_field_value_str)
-            self.sheet1.write(i, 7, 'Field displayed successfully @Checkout page')
+            checkout_page.checkout_page(self.field_display_value_str)
+            self.sheet1.write(i, 10, 'Field displayed successfully @Checkout page')
             self.workbook1.save('/Users/ammuprakash/Downloads/WEPO Fields.xlsx')
 
             # Previewing the created field at My Account >> View Order page#
             self.driver.get("https://test1.floopbox.com/index.php/my-account/orders/")
             orders_page = OrdersPage(driver)
-            orders_page.orders_page(self.value_field_type_str, self.value_field_value_str)
-            self.sheet1.write(i, 8, 'Field displayed successfully @My Account >> View Order page')
+            orders_page.orders_page(self.value_field_type_str, self.field_display_value_str)
+            self.sheet1.write(i, 11, 'Field displayed successfully @My Account >> View Order page')
             self.workbook1.save('/Users/ammuprakash/Downloads/WEPO Fields.xlsx')
 
             # Previewing the created field at WooCommerce >> Orders#
             self.driver.get("https://test1.floopbox.com/wp-admin/edit.php?post_type=shop_order")
             admin_orders_page = AdminOrdersPage(driver)
-            admin_orders_page.admin_orders_page(self.value_field_type_str, self.value_field_value_str)
-            self.sheet1.write(i, 9, 'Field displayed successfully @WooCommerce >> Orders >> View Order page')
+            admin_orders_page.admin_orders_page(self.value_field_type_str, self.field_display_value_str)
+            self.sheet1.write(i, 12, 'Field displayed successfully @WooCommerce >> Orders >> View Order page')
             self.workbook1.save('/Users/ammuprakash/Downloads/WEPO Fields.xlsx')
 
     @classmethod
